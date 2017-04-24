@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import app_config
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 #DB Initializing object
 db = SQLAlchemy()
@@ -25,6 +26,9 @@ def create_app(config_name):
     login_manager.init_app(app)
     login_manager.login_message = "You must be logged in to access this page"
     login_manager.login_view = "auth.login"
+
+    migrate = Migrate(app, db)
+    from app import models
 
     return app
 
