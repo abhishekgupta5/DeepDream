@@ -1,7 +1,7 @@
 # app/auth/forms.py
 
 from flask_wtf import FlaskForm
-from wtforms import Passwordfield, StringField, SubmitField, ValidationError
+from wtforms import PasswordField, StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..models import User
@@ -28,5 +28,5 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     """Forms for users to login"""
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[Datarequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField('Login')
