@@ -1,9 +1,9 @@
 # app/admin/views.py
 
-from flask import abort, flash, redirect, url_for, render_template,
+from flask import abort, flash, redirect, url_for, render_template
 from flask_login import current_user, login_required
 from . import admin
-from forms import DepartmentForm
+from .forms import DepartmentForm
 from .. import db
 from ..models import Department
 
@@ -31,7 +31,7 @@ def add_department():
     form = DepartmentForm()
 
     if form.validate_on_submit():
-        department = Department(name=form.name.data, description=form.descrioption.data)
+        department = Department(name=form.name.data, description=form.description.data)
         try:
             #Add department to the database
             db.session.add(department)
@@ -49,7 +49,7 @@ def add_department():
 
 @admin.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edit_department():
+def edit_department(id):
     """Edit a department"""
     check_admin()
     add_department = False
@@ -70,11 +70,11 @@ def edit_department():
 
 @admin.route('/departments/delete<int:id>', methods=['GET', 'POST'])
 @login_required
-def delete_department():
+def delete_department(id):
     """Delete a department from the database"""
     check_admin()
 
-    department = Department.query.get_or_404(id):
+    department = Department.query.get_or_404(id)
     db.session.delete(department)
     db.session.commit()
     flash('You have successfully deleted a department.')
