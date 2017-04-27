@@ -44,8 +44,11 @@ def login():
         if user is not None and user.verify_password(form.password.data):
             login_user(user)
 
-            #Redirect to the dashboard page after login
-            return redirect(url_for("home.dashboard"))
+            #Redirect to the appropriate dashboard page after login
+            if user.is_admin:
+                return redirect(url_for("home.admin_dashboard"))
+            else:
+                return redirect(url_for("home.dashboard"))
         #If login details are incorrect
         else:
             flash('Invalid email or password.')
